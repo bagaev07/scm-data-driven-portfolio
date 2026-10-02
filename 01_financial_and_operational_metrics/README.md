@@ -1,24 +1,16 @@
-# Data-Driven SCM Analytics: Bridging SCOR Operational Reliability & Financial Performance
+# SCOR Operational Reliability & Financial Performance Model
+This repository holds a PostgreSQL-backed model that maps logistical disruptions to liquidity impact. It translates everyday supply chain volatility — such as service level drops and delivery failures — into hard financial metrics like ROWC and DSO.
 
-This project demonstrates how data engineering and advanced SQL analytics are applied to bridge the gap between supply chain operations and corporate finance. Using the **ASCM/SCOR (Supply Chain Operations Reference) framework**, this repository contains an end-to-end data analytics model that quantifies how logistical disruptions and service level degradation directly impact working capital, liquidity, and financial performance.
-
-## 🏢 Business Context & Problem Statement
-In supply chain management, operations and corporate finance often operate in isolated silos:
-* **The CFO Goal:** Maximize capital velocity and minimize inventory holding costs to boost **Return on Working Capital (ROWC)**.
-* **The Logistics Reality:** Aggressive inventory reductions without tracking supply chain volatility create severe **Out-of-Stock (OOS)** risks, degrade service levels (**Perfect Order Fulfillment - POF**), and freeze cash flow when documentation errors delay accounts receivable.
-
-This project simulates real-world FMCG supply chain transactions to isolate variables behind Key Account (KA) service degradation and maps operational failures to their financial root causes.
+## Problem Statement: The SCM & Finance Gap
+This model addresses the classic misalignment between inventory optimization and customer service levels. Aggressive inventory reductions often lead to a high stockout rate, tanking the POF metric. Furthermore, backend issues like invoice inaccuracies delay Accounts Receivable, trapping cash. The project uses a synthetic FMCG dataset to run data-driven root-cause analysis on how logistical failures impact cash flow.
 
 ---
 
-## 🛠️ Tech Stack & Architecture
-* **Database Engine:** PostgreSQL
-* **Data Engineering:** Python (Pandas, SQLAlchemy) for generating synthetic transactional and asset distribution datasets.
-* **SQL Techniques:** Common Table Expressions (CTEs), Conditional Pivoting (`CASE WHEN`), Data Type Casting, and Advanced Aggregations.
-
+##  Stack & SQL Pipeline
+Built on PostgreSQL with synthetic data pipeline via Python. The analytical core focuses on two areas:
+1. Operational Focus: Running binary slicing on 4 SCOR criteria to calculate exact Perfect Order Fulfillment (POF).
+2. Financial Focus: Calculating quarterly capital turnover days, ROWC, and ROFA using dynamic asset valuations.
 ---
-
-## 📊 Analytical Pipeline & SQL Implementations
 
 ### Phase 1: Operational Reliability (SCOR Perfect Order Fulfillment)
 This phase isolates whether service level drops in the Key Account segment are caused by internal warehouse picking inefficiencies or 3PL carrier bottlenecks.
@@ -95,14 +87,8 @@ LEFT JOIN fixed_per_month ON sc_finance.period = fixed_per_month.period;
 
 ---
 
-## 💡 Strategic SCM Insights & Strategic Decisions
-1. **The Hidden Synergy (POF vs. ROWC):** The queries prove that a breakdown in operational components—specifically documentation accuracy (`is_doc_accurate = 0`)—directly causes financial delays. Missing or incorrect shipping papers prevent customers from clearing invoices on time, expanding **Days Sales Outstanding (DSO)**, inflating **Accounts Receivable**, and locking up cash flow.
-2. **Mitigating "Blind" Optimization:** Blindly slashing safety stocks to maximize financial metrics destroys supply chain **Agility**. To balance this trade-off, a dynamic stock differentiation strategy must be deployed: establishing a 98% POF target with a robust **Safety Stock** buffer for high-margin SKU groups, while shifting low-margin items to **Cross-Docking** (85% POF target) to unlock **Working Capital**.
+## Key Takeaways
+• Operational Failures = Frozen Cash: Documentation errors delay customer billing, directly expanding DSO and locking up liquidity.
+• Smart Buffering: Instead of blanket inventory cuts, the data backs a tiered safety stock strategy (98% POF for core SKUs vs. 85% via cross-docking for tail items).
 
----
-## 🚀 How to Run the Project
-1. Clone the repository: `git clone https://github.com`
-2. Set up a PostgreSQL instance named `scm_portfolio`.
-3. Run the data generation script: `python generate_data.py` (populates data into `scor_orders_log`, `sc_current_assets`, and `sc_finance_performance`).
-4. Execute queries inside the `queries/` folder to view S&OP metrics.
-
+## 
