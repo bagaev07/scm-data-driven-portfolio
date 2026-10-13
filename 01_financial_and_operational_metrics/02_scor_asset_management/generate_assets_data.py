@@ -7,7 +7,7 @@ DATABASE_TYPE = 'postgresql'
 DBAPI = 'psycopg2'
 HOST = 'localhost'
 USER = 'postgres'
-PASSWORD = 'postgres' # Укажите ваш пароль
+PASSWORD = 'YOUR_POSTGRES_PASSWORD' # Укажите ваш пароль
 PORT = '5432'
 DB_NAME = 'scm_portfolio'
 
