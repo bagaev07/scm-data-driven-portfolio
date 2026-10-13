@@ -1,3 +1,4 @@
+/*
 SELECT sku_name,
     vendor_name,
     COUNT(po_id) AS total_orders,
@@ -6,8 +7,7 @@ SELECT sku_name,
     ROUND(STDDEV_SAMP(actual_lead_time), 2) AS std_dev
 FROM mars_raw_materials_orders
 GROUP BY sku_name, vendor_name
-
-
+*/
 
 /*
 
